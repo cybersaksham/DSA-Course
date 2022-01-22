@@ -17,7 +17,7 @@ int main()
     Node<int>::print(head);
 
     // Deletion at index
-    head = Node<int>::remove(head, 1);
+    head = Node<int>::remove(head, 6);
     Node<int>::print(head);
 
     // Deletion at a node

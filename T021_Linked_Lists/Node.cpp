@@ -104,6 +104,11 @@ public:
     // Deletion at index i
     static Node *remove(Node *head, int i)
     {
+        if (head == NULL)
+        {
+            throw out_of_range("Index out of range");
+        }
+
         if (i == 0)
         {
             Node *a = head->next;
@@ -117,7 +122,7 @@ public:
             tmp = tmp->next;
         }
 
-        if (tmp == NULL)
+        if (tmp == NULL || tmp->next == NULL)
         {
             throw out_of_range("Index out of range");
         }
@@ -132,6 +137,11 @@ public:
     // Deletion at a node
     Node *remove(Node *head)
     {
+        if (head == NULL)
+        {
+            throw out_of_range("Index out of range");
+        }
+
         if (this == head)
         {
             Node *a = this->next;
