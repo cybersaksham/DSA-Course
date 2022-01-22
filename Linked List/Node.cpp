@@ -76,11 +76,23 @@ public:
         }
     }
 
-    // Exrecise Functions
+    // Exercise Functions
     static int getIndex(Node *, int);
     static Node *appendLastNToFirst(Node *, int);
     static void removeDuplicates(Node *);
     static void printReverseHelp(Node *);
     static void printReverse(Node *);
     static bool checkPalindrome(Node *);
+    static int midpoint(Node *);
+    static Node *merge(Node *, Node *);
+    static Node *mergeTwo(Node *, Node *);
+    static Node *mergeSort(Node *);
+    static Node *reverseRecursive(Node *);
+    static Node *reverseIterative(Node *);
+    static int getIndexRecursive(Node *, int);
+    static Node *evenAfterOdd(Node *);
+    static Node *deleteEveryNNodes(Node *, int, int);
+    static Node *swapNodes(Node *, int, int);
+    static Node *reverseEachKNodes(Node *, int);
+    static Node *bubbleSort(Node *head);
 };
