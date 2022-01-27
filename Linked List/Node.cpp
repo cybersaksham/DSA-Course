@@ -94,5 +94,7 @@ public:
     static Node *deleteEveryNNodes(Node *, int, int);
     static Node *swapNodes(Node *, int, int);
     static Node *reverseEachKNodes(Node *, int);
-    static Node *bubbleSort(Node *head);
+    static Node *bubbleSort(Node *);
+    static int nextNumberHelp(Node *);
+    static Node *nextNumber(Node *);
 };
