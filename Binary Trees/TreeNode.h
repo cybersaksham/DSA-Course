@@ -137,4 +137,5 @@ public:
     static Node<TreeNode<T> const *> **levelList(TreeNode const *);
     static void zigzagLevels(TreeNode const *);
     static void noSiblings(TreeNode const *);
+    static void pairSum(TreeNode const *, int);
 };
