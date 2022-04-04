@@ -6,6 +6,25 @@ class EulerianGraph
     int nodes;
     int **V;
 
+    // Copy Graph
+    int **copyGraph() const {
+        int **ans = new int*[this->nodes];
+        for(int i=0; i<this->nodes; i++) ans[i] = new int[this->nodes];
+        
+        for(int i=0; i<this->nodes; i++) {
+            for(int j=0; j<this->nodes; j++) ans[i][j] = this->V[i][j];
+        }
+
+        return ans;
+    }
+
+    // Retrieve Graph
+    void retrieveGraph(int const * const *arr) {
+        for(int i=0; i<this->nodes; i++) {
+            for(int j=0; j<this->nodes; j++) this->V[i][j] = arr[i][j];
+        }
+    }
+
     // Calculate Degree
     int findDegree(int k) const {
         if(k >= this->nodes || k < 0) return 0;
@@ -16,7 +35,7 @@ class EulerianGraph
         return count;
     }
 
-    // Checking for connection between 2 nodes
+    // Checking for connected graph
     bool isGraphConnected() const {
         if(this->nodes <= 0) return true;
 
@@ -25,8 +44,12 @@ class EulerianGraph
 
         queue<int> q;
 
-        visited[0] = true;
-        q.push(0);
+        int start = 0;
+        while(start < this->nodes && this->findDegree(start) <= 0) visited[start++] = true;
+        if(start == this->nodes) return true;
+
+        visited[start] = true;
+        q.push(start);
 
         while(!q.empty()) {
             int tmp = q.front();
@@ -42,7 +65,7 @@ class EulerianGraph
         }
 
         for(int i=0; i<this->nodes; i++) {
-            if(!visited[i]) {
+            if(!visited[i] && this->findDegree(i) > 0) {
                 delete[] visited;
                 return false;
             }
@@ -53,7 +76,7 @@ class EulerianGraph
     }
 
     // Checking for connection between 2 nodes
-    bool isConnected(int node1, int node2) {
+    bool isConnected(int node1, int node2) const {
         if(node1 < 0 || node1 >= this->nodes) return false;
         if(node2 < 0 || node2 >= this->nodes) return false;
 
@@ -154,18 +177,21 @@ public:
 
     // Fleury's Algorithm to construct an Eulerian Cycle
     pair<int, int *> constructCycleByFleury() {
-        if(this->nodes <= 0 || !this->isEulerian()) {
-            int *ans = new int[0];
-            return {0, ans};
-        }
+        if(this->nodes <= 0 || !this->isEulerian()) return {0, NULL};
+
+        int **tmpGraph = this->copyGraph();
+
+        int start = 0;
+        while(start < this->nodes && this->findDegree(start) <= 0) start++;
+        if(start == this->nodes) start = 0;
 
         int size = 0;
-        for(int i=1; i<this->nodes; i++) size += this->findDegree(i);
-        size  = (size + this->findDegree(0) + 2) / 2;
+        for(int i=start; i<this->nodes; i++) size += this->findDegree(i);
+        size  = (size + 2) / 2;
         int *ans = new int[size];
 
-        int ptr = 0, currVertex = 0;
-        ans[ptr++] = 0;
+        int ptr = 0, currVertex = start;
+        ans[ptr++] = start;
         while(ptr < size) {
             int currEdge = -1;
             for(int i=0; i<this->nodes; i++) {
@@ -189,8 +215,12 @@ public:
                 this->removeEdge(currVertex, currEdge);
                 currVertex = currEdge;
                 ans[ptr++] = currVertex;
-            } else break;
+            } else ans[ptr++] = currVertex;
         }
+
+        this->retrieveGraph(tmpGraph);
+        for(int i=0; i<this->nodes; i++) delete[] tmpGraph[i];
+        delete[] tmpGraph;
 
         return {size, ans};
     }
