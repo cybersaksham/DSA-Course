@@ -1,5 +1,4 @@
 #include <queue>
-#include <sstream>
 using namespace std;
 
 class EulerianGraph
