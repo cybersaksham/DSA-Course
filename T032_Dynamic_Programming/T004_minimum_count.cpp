@@ -24,7 +24,7 @@ int minCountMemoizeHelper(int n, int *arr) {
     if(arr[n] != -1) return arr[n];
 
     int ans = INT_MAX;
-    for(int i=1; i<=sqrt(n); i++) ans = min(ans, 1 + minCount(n - i * i));
+    for(int i=1; i<=sqrt(n); i++) ans = min(ans, 1 + minCountMemoizeHelper(n - i * i, arr));
     arr[n] = ans;
 
     return ans;

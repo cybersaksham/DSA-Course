@@ -30,8 +30,8 @@ int minStepsMemoizeHelper(int n, int *arr) {
 
     int a = minSteps(n - 1);
     int b = INT_MAX, c = INT_MAX;
-    if(n % 2 == 0) b = minSteps(n / 2);
-    if(n % 3 == 0) c = minSteps(n / 3);
+    if(n % 2 == 0) b = minStepsMemoizeHelper(n / 2, arr);
+    if(n % 3 == 0) c = minStepsMemoizeHelper(n / 3, arr);
 
     arr[n] = 1 + min(a, min(b, c));
     return arr[n];
